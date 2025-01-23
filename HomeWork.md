@@ -1,0 +1,14 @@
+-Created a Repo
+-Initailize the repo by npm init.
+-node_modules:is a directory that stores external dependencies for a Node.js project.
+-External dependencies: The node_modules folder contains all the external libraries and packages that a project needs to function. 
+-Nested dependencies: It also stores any nested dependencies of the packages that are installed.  
+-Difference b/w the Package.json and package-lock.json:
+  -package.json:defines what packages you need and their version ranges.
+  -package-lock.json:ensures which exact versions of those packages get installed.
+- what is ^ and ~:
+  -caret(^):Do not modify the leftmost digit i.e, it will update to newer minor and patch changes.
+  -Tilde(~): it will update to newer patch versions but not minor or major versions.
+- Created a server.
+- Created Different Routes.
+- Used nodemon. 
