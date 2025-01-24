@@ -7,8 +7,13 @@
   -package.json:defines what packages you need and their version ranges.
   -package-lock.json:ensures which exact versions of those packages get installed.
 - what is ^ and ~:
-  -caret(^):Do not modify the leftmost digit i.e, it will update to newer minor and patch changes.
+  -caret(^):Do not modify the leftmost digit i.e, it will update to newer minor and patch changes.c
   -Tilde(~): it will update to newer patch versions but not minor or major versions.
 - Created a server.
 - Created Different Routes.
-- Used nodemon. 
+- Used nodemon.
+- Order of routes matter alot. 
+- Practiced API methode: GET,POST,PATCH,DELETE,PUT.
+- Practiced +,(),*,and ? in API.
+- Practiced regex in API.
+- req.query and req.params

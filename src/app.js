@@ -2,15 +2,30 @@ const express=require('express');
 
 const app=express();
 
-app.use("/hello",(req,res)=>{
-    res.send("Hello World")
+
+
+app.post("/user/:userId/:userName",(req,res)=>{
+    console.log(req.params);
+    res.send("Post method")
 })
-app.use("/user",(req,res)=>{
-    res.send("Cannot acessss this page")
+app.get("/user",(req,res)=>{
+    res.send({firstname:"Naushin",lastname:"Khan"})
 })
-app.use("/",(req,res)=>{
-    res.send("This is a test page")
+
+app.delete("/user",(req,res)=>{
+    res.send("Delete method")
 })
+
+app.patch("/user",(req,res)=>{
+    res.send("Patch method")
+})
+
+app.put("/user",(req,res)=>{
+    res.send("Put method")
+})
+
+
+
 app.listen(7777,()=>{
 console.log('Server is running on port 7777');
 })
