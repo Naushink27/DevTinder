@@ -13,7 +13,16 @@
 - Created Different Routes.
 - Used nodemon.
 - Order of routes matter alot. 
+- Introduction to POSTMAN:
 - Practiced API methode: GET,POST,PATCH,DELETE,PUT.
 - Practiced +,(),*,and ? in API.
 - Practiced regex in API.
 - req.query and req.params
+- Multiple Route handlers.
+- next()
+- Next and error along with res.send().
+- What is middleware: Middleware is a request handler that allows you to intercept and manipulate requests and    
+  responses before they reach route handlers. They are the functions that are invoked by the Express.js routing layer.
+- Diff b/w app.use and app.all
+- write a dummy auth middleware for admin, user except login.
+- Error Handling
