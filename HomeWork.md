@@ -1,9 +1,9 @@
--Created a Repo
--Initailize the repo by npm init.
--node_modules:is a directory that stores external dependencies for a Node.js project.
--External dependencies: The node_modules folder contains all the external libraries and packages that a project needs to function. 
--Nested dependencies: It also stores any nested dependencies of the packages that are installed.  
--Difference b/w the Package.json and package-lock.json:
+- Created a Repo
+- Initailize the repo by npm init.
+- node_modules:is a directory that stores external dependencies for a Node.js project.
+- External dependencies: The node_modules folder contains all the external libraries and packages that a project needs to function. 
+- Nested dependencies: It also stores any nested dependencies of the packages that are installed.  
+- Difference b/w the Package.json and package-lock.json:
   -package.json:defines what packages you need and their version ranges.
   -package-lock.json:ensures which exact versions of those packages get installed.
 - what is ^ and ~:
@@ -26,3 +26,10 @@
 - Diff b/w app.use and app.all
 - write a dummy auth middleware for admin, user except login.
 - Error Handling
+- Created free cluster on MongoDB.
+- Installed Mongoose and then connected to the cluster.
+- Connected to the DB before starting the server.
+- Created User Schema & user Model.
+- Created new instamce of the User model.
+- Push Some documents using API calls from postman.
+- Error Handling using try and catch.
