@@ -50,6 +50,54 @@ app.post('/signup',async(req,res)=>{
     }
    
 })
+app.get("/user/:id",async(req,res)=>{
+  const id= req.params.id;
+  try{
+    const user= await User.findById(id);
+    if(!user){
+       res.status(404).send("User not found")
+    }
+    else{
+     res.send(user);
+    }
+  }
+  catch(err){
+    res.status(500).send("Server error")
+  }
+})
+app.delete("/user",async(req,res)=>{
+  const userId= req.body.userId;
+   try{
+    const user= await User.findByIdAndDelete(userId);
+    res.status(200).send("User deleted successfully")
+   }catch(err){
+    res.status(500).send("Server error")
+  }
+})
+//Update user by id.
+app.patch("/user",async(req,res)=>{
+  const userId= req.body.userId;
+  const data =req.body;
+  try{
+  const user=  await User.findByIdAndUpdate(userId,data, { returnDocument: 'after' } );
+    console.log(user);
+    res.status(200).send("User updated successfully")
+  }
+  catch(err){
+    res.status(500).send("Server error")}
+})
+//update user by email.
+// app.patch("/user",async(req,res)=>{
+//   const email= req.body.email;
+//   const data =req.body;
+//   try{
+//   const user=  await User.findOneAndUpdate({email:email},data );
+//     console.log(user);
+//     res.status(200).send("User updated successfully")
+//   }
+//   catch(err){
+//     res.status(500).send("Server error")}
+// })
 connectDB().then(()=>{
   console.log("Database connected")
   app.listen(7777,()=>{

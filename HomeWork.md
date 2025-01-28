@@ -33,3 +33,14 @@
 - Created new instamce of the User model.
 - Push Some documents using API calls from postman.
 - Error Handling using try and catch.
+
+- Difference b/w Json Object and JS object.
+  - JSON: Text-based format for data exchange
+  - JavaScript Object: In-memory data structure in JavaScript.
+-  Intro to Express.json(): It reads the incoming request body and converts it from a JSON string into a         JavaScript object.
+- Get A user data by email.
+- Feed API: get all the users. 
+- Delete a user by ID.
+- Updated user by ID.
+- 
+- Difference b/w PATCH and PUT.
