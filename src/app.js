@@ -4,6 +4,37 @@ const app=express();
 const User=require('./models/user');
 
 app.use(express.json());
+app.get("/user",async(req,res)=>{
+  const emailId= req.body.email;
+
+  try{
+    //  const user= await User.find({email:emailId});
+    //  if(user.length==0){
+    //     res.status(404).send("User not found")
+    //  }
+    //  else{
+    //   res.send(user);
+    //  }
+     const user= await User.findOne({email:emailId});
+     if(!user){
+        res.status(404).send("User not found")
+     }
+     else{
+      res.send(user);
+     }
+  }catch(err){
+    res.status(500).send("Server error")
+  }
+})
+app.get("/feed",async(req,res)=>{
+  const users=await User.find({})
+  if(users.length===0){
+    res.status(404).send("No user found")
+  }
+  else{
+    res.send(users)
+  }
+})
 app.post('/signup',async(req,res)=>{
 
   //Creating new instance of the User model.
