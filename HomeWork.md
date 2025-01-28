@@ -42,5 +42,5 @@
 - Feed API: get all the users. 
 - Delete a user by ID.
 - Updated user by ID.
-- 
-- Difference b/w PATCH and PUT.
+- Updated user  by EmailID.
+- Difference b/w PATCH and PUT: Put:Use PUT for full updates  Patch:Use PATCH for partial updates 
