@@ -43,4 +43,11 @@
 - Delete a user by ID.
 - Updated user by ID.
 - Updated user  by EmailID.
-- Difference b/w PATCH and PUT: Put:Use PUT for full updates  Patch:Use PATCH for partial updates 
+- Difference b/w PATCH and PUT: Put:Use PUT for full updates  Patch:Use PATCH for partial updates
+
+
+- Explore schema type options from Documentation.
+- add require , unique,lowercase,min,minlength,trim.
+- Add default.
+- Created custom validate function for gender.
+- Added timestamps.

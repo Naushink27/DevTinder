@@ -26,15 +26,18 @@ app.get("/user",async(req,res)=>{
     res.status(500).send("Server error")
   }
 })
-app.get("/feed",async(req,res)=>{
-  const users=await User.find({})
-  if(users.length===0){
-    res.status(404).send("No user found")
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    if (users.length === 0) {
+      res.status(404).send("No user found");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res.status(500).send("Server error");
   }
-  else{
-    res.send(users)
-  }
-})
+});
 app.post('/signup',async(req,res)=>{
 
   //Creating new instance of the User model.
@@ -46,7 +49,7 @@ app.post('/signup',async(req,res)=>{
       res.send("User created successfully")
     }
     catch(err){
-      res.status(500).send("Server error")
+      res.status(500).send("Server error"+err)
     }
    
 })
@@ -69,7 +72,13 @@ app.delete("/user",async(req,res)=>{
   const userId= req.body.userId;
    try{
     const user= await User.findByIdAndDelete(userId);
-    res.status(200).send("User deleted successfully")
+    if(!user){
+       res.status(404).send("User not found")
+    }
+    else{
+      res.status(200).send("User deleted successfully")
+    }
+   
    }catch(err){
     res.status(500).send("Server error")
   }
@@ -79,19 +88,24 @@ app.patch("/user",async(req,res)=>{
   const userId= req.body.userId;
   const data =req.body;
   try{
-  const user=  await User.findByIdAndUpdate(userId,data, { returnDocument: 'after' } );
-    console.log(user);
-    res.status(200).send("User updated successfully")
-  }
+  const user=  await User.findByIdAndUpdate(userId,data, { returnDocument: 'after' ,runValidators: true } );
+  console.log(user);
+  if(!user){
+    res.status(404).send("User not found")
+ }
+ else{
+   res.status(200).send("User Updated successfully")
+ }
+}
   catch(err){
-    res.status(500).send("Server error")}
+    res.status(500).send("Update failed"+err)}
 })
 //update user by email.
 // app.patch("/user",async(req,res)=>{
 //   const email= req.body.email;
 //   const data =req.body;
 //   try{
-//   const user=  await User.findOneAndUpdate({email:email},data );
+//   const user=  await User.findOneAndUpdate(email,data );
 //     console.log(user);
 //     res.status(200).send("User updated successfully")
 //   }
