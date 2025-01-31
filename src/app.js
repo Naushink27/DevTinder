@@ -45,29 +45,17 @@ app.post('/signup',async(req,res)=>{
     const user=new User(req.body);
     //Saving the user to the database.
     try{
+      
       await user.save();
       res.send("User created successfully")
+      
     }
     catch(err){
-      res.status(500).send("Server error"+err)
+      res.status(500).send("Something went wrong"+" "+err)
     }
    
 })
-app.get("/user/:id",async(req,res)=>{
-  const id= req.params.id;
-  try{
-    const user= await User.findById(id);
-    if(!user){
-       res.status(404).send("User not found")
-    }
-    else{
-     res.send(user);
-    }
-  }
-  catch(err){
-    res.status(500).send("Server error")
-  }
-})
+
 app.delete("/user",async(req,res)=>{
   const userId= req.body.userId;
    try{
@@ -84,15 +72,23 @@ app.delete("/user",async(req,res)=>{
   }
 })
 //Update user by id.
-app.patch("/user",async(req,res)=>{
-  const userId= req.body.userId;
+app.patch("/user/:userId",async(req,res)=>{
+  const userId= req.params.userId;
   const data =req.body;
   try{
+   
   const user=  await User.findByIdAndUpdate(userId,data, { returnDocument: 'after' ,runValidators: true } );
   console.log(user);
+  console.log(data.skills);
   if(!user){
     res.status(404).send("User not found")
  }
+ const isAllowed=["age","gender","password","skills","imageUrl","about"];
+ const updateAllowed= Object.keys(data).every((k)=>isAllowed.includes(k));
+ if(!updateAllowed){
+   throw new Error("Invalid updates")
+ }
+
  else{
    res.status(200).send("User Updated successfully")
  }
