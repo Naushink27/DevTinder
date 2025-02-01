@@ -2,6 +2,10 @@ const express=require('express');
 const connectDB=require("./config/database")
 const app=express();
 const User=require('./models/user');
+const {validateSignup}=require("./utils/validate")
+const bcrypt=require("bcrypt");
+
+
 
 app.use(express.json());
 app.get("/user",async(req,res)=>{
@@ -39,19 +43,33 @@ app.get("/feed", async (req, res) => {
   }
 });
 app.post('/signup',async(req,res)=>{
+  try{
+   //Validate the data before creating a user.
+    validateSignup(req);
 
+   //Encrypt the password.
+   const {firstName,lastName,email}= req.body;
+   const password=req.body.password;
+   const hashedPassword= await bcrypt.hash(password,10);
+   console.log(hashedPassword);
+    
   //Creating new instance of the User model.
 
-    const user=new User(req.body);
+    const user=new User({
+      firstName,
+      lastName,
+      email,
+      password:hashedPassword
+    });
     //Saving the user to the database.
-    try{
+   
       
       await user.save();
       res.send("User created successfully")
       
     }
     catch(err){
-      res.status(500).send("Something went wrong"+" "+err)
+      res.status(500).send("ERROR: "+" "+err)
     }
    
 })
@@ -75,9 +93,18 @@ app.delete("/user",async(req,res)=>{
 app.patch("/user/:userId",async(req,res)=>{
   const userId= req.params.userId;
   const data =req.body;
+  const {firstName,lastName,email} =req.body;
+  const password=req.body.password;
+  const hashedPassword= await bcrypt.hash(password,10);
+
   try{
    
-  const user=  await User.findByIdAndUpdate(userId,data, { returnDocument: 'after' ,runValidators: true } );
+  const user=  await User.findByIdAndUpdate(userId,{
+    firstName,
+    lastName,
+    email,
+    password:hashedPassword
+  }, { returnDocument: 'after' ,runValidators: true } );
   console.log(user);
   console.log(data.skills);
   if(!user){
@@ -94,7 +121,7 @@ app.patch("/user/:userId",async(req,res)=>{
  }
 }
   catch(err){
-    res.status(500).send("Update failed"+err)}
+    res.status(500).send("ERROR: "+err)}
 })
 //update user by email.
 // app.patch("/user",async(req,res)=>{

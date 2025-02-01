@@ -51,3 +51,12 @@
 - Add default.
 - Created custom validate function for gender.
 - Added timestamps.
+- Add API level validation on patch request and signup post api.
+- Data Sanitization:Add API validation for each field in the schema.
+- Used npm validator
+- used isEmail, isStrongPassword,isAlpha for validations.
+- Never trust the req.body.
+
+- Created a helper function to validate data before creating the new instance of the USER model in signup API.
+- Installed bcrypt package to encrypt the passwords.
+- Encrypted the password before signup in post request and also before updating user data in patch request.
