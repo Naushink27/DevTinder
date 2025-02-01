@@ -60,3 +60,5 @@
 - Created a helper function to validate data before creating the new instance of the USER model in signup API.
 - Installed bcrypt package to encrypt the passwords.
 - Encrypted the password before signup in post request and also before updating user data in patch request.
+- Created a login API and check for the email if it exists or not .
+- Then compare the entered email with user.email by using bcrypt.compare().

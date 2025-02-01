@@ -123,18 +123,32 @@ app.patch("/user/:userId",async(req,res)=>{
   catch(err){
     res.status(500).send("ERROR: "+err)}
 })
-//update user by email.
-// app.patch("/user",async(req,res)=>{
-//   const email= req.body.email;
-//   const data =req.body;
-//   try{
-//   const user=  await User.findOneAndUpdate(email,data );
-//     console.log(user);
-//     res.status(200).send("User updated successfully")
-//   }
-//   catch(err){
-//     res.status(500).send("Server error")}
-// })
+app.post("/login",async(req,res)=>{
+  try{
+    const {email,password}=req.body;
+    if(!email || !password){
+      throw new Error("Email and password are required")
+    }
+    const user= await User.findOne({email:email});
+    if(!user){
+      throw new Error("invalid Credentials");
+
+    }
+    const isPassword= await bcrypt.compare(password,user.password);
+    if(isPassword){
+      res.send("Login successful")
+    }
+    else{
+      throw new Error("Invalid Credentials")
+    }
+
+  }catch(err){
+    res.status(500).send("ERROR: "+err)
+  }
+   
+  
+
+})
 connectDB().then(()=>{
   console.log("Database connected")
   app.listen(7777,()=>{
