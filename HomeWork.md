@@ -62,3 +62,14 @@
 - Encrypted the password before signup in post request and also before updating user data in patch request.
 - Created a login API and check for the email if it exists or not .
 - Then compare the entered email with user.email by using bcrypt.compare().
+
+- Understood the JWT token concept refer diagram.
+- once the user is successfully logged in , created a token and store that inside the cookie by using 
+- req.cookie(token,"TOKEN").
+- created a profile API , which checks for the Token by extracting all cookies. 
+- for that we installed npm package , cookie-parser.
+- Installed jsonwebtoken for generating real token when the user hits the login api.
+- used jwt.sign({hiddenINFO(the ID of user),"Hidden Password"}).
+- this token is stored in the cookie by res.cookie()
+- in the profile API, we got this token from cookie and verify this token by jwt.verify({hiddenINFO(the ID of user),"Hidden Password"})
+- Now from this decodedmsg we got the users ID , so from this id we can access that particular users data.
