@@ -4,22 +4,18 @@ const app=express();
 const User=require('./models/user');
 const {validateSignup}=require("./utils/validate")
 const bcrypt=require("bcrypt");
-
-
+const cookie=require("cookie-parser");
+const jwt=require("jsonwebtoken");
 
 app.use(express.json());
+app.use(cookie())
+
 app.get("/user",async(req,res)=>{
-  const emailId= req.body.email;
+  const email= req.body.email;
 
   try{
-    //  const user= await User.find({email:emailId});
-    //  if(user.length==0){
-    //     res.status(404).send("User not found")
-    //  }
-    //  else{
-    //   res.send(user);
-    //  }
-     const user= await User.findOne({email:emailId});
+ 
+     const user= await User.findOne({email:email});
      if(!user){
         res.status(404).send("User not found")
      }
@@ -90,39 +86,52 @@ app.delete("/user",async(req,res)=>{
   }
 })
 //Update user by id.
-app.patch("/user/:userId",async(req,res)=>{
-  const userId= req.params.userId;
-  const data =req.body;
-  const {firstName,lastName,email} =req.body;
-  const password=req.body.password;
-  const hashedPassword= await bcrypt.hash(password,10);
+app.patch("/user/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const data = req.body;
+  const { skills, imageUrl, about, password,age } = data;
 
-  try{
-   
-  const user=  await User.findByIdAndUpdate(userId,{
-    firstName,
-    lastName,
-    email,
-    password:hashedPassword
-  }, { returnDocument: 'after' ,runValidators: true } );
-  console.log(user);
-  console.log(data.skills);
-  if(!user){
-    res.status(404).send("User not found")
- }
- const isAllowed=["age","gender","password","skills","imageUrl","about"];
- const updateAllowed= Object.keys(data).every((k)=>isAllowed.includes(k));
- if(!updateAllowed){
-   throw new Error("Invalid updates")
- }
+  let hashedPassword;
+  if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+  }
 
- else{
-   res.status(200).send("User Updated successfully")
- }
-}
-  catch(err){
-    res.status(500).send("ERROR: "+err)}
-})
+  try {
+      // Validate update fields before updating
+      const isAllowed = [  "password", "skills", "imageUrl", "about", "age", "gender"];
+      const updateAllowed = Object.keys(data).every((k) => isAllowed.includes(k));
+
+      if (!updateAllowed) {
+          return res.status(400).send("Invalid updates");
+      }
+
+      // Prepare update object
+      const updateFields = {   skills, imageUrl, about ,age};
+      if (password) {
+          updateFields.password = hashedPassword;
+      }
+
+      // Update user
+      const user = await User.findByIdAndUpdate(userId, updateFields, {
+          returnDocument: "after",
+          runValidators: true,
+      });
+
+      if (!user) {
+          return res.status(404).send("User not found");
+      }
+
+      console.log(user);
+      if (data.skills) {
+          console.log(data.skills);
+      }
+
+      res.status(200).send("User Updated Successfully");
+  } catch (err) {
+      res.status(500).send("ERROR: " + err.message);
+  }
+});
+
 app.post("/login",async(req,res)=>{
   try{
     const {email,password}=req.body;
@@ -130,12 +139,16 @@ app.post("/login",async(req,res)=>{
       throw new Error("Email and password are required")
     }
     const user= await User.findOne({email:email});
+    const id= user._id;
     if(!user){
       throw new Error("invalid Credentials");
 
     }
     const isPassword= await bcrypt.compare(password,user.password);
     if(isPassword){
+        const token= await jwt.sign({id},"Dev@Tinder$123")
+        console.log(token)
+      res.cookie("token",token);
       res.send("Login successful")
     }
     else{
@@ -148,6 +161,25 @@ app.post("/login",async(req,res)=>{
    
   
 
+})
+app.get("/profile",async(req,res)=>{
+ try{ 
+ const cookies= req.cookies;
+ const {token}=cookies;
+ if(!token){
+  throw new Error("Invalid Token");
+ }
+ const decoded= await jwt.verify(token,"Dev@Tinder$123")
+  const{id}=decoded;
+   const user= await User.findById(id)
+   if(!user){
+    throw new Error("Invalid User")
+   }
+   res.send(user)
+}
+ catch(err){
+  res.status(500).send("ERROR: "+err)
+ }
 })
 connectDB().then(()=>{
   console.log("Database connected")
