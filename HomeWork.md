@@ -73,3 +73,8 @@
 - this token is stored in the cookie by res.cookie()
 - in the profile API, we got this token from cookie and verify this token by jwt.verify({hiddenINFO(the ID of user),"Hidden Password"})
 - Now from this decodedmsg we got the users ID , so from this id we can access that particular users data.
+
+- We have created a userAuth and write inside profile and sendConnectionRequest API.
+- ExpiresIn for the expiry of jwt .
+
+
