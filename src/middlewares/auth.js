@@ -1,7 +1,8 @@
 const User=require("../models/user")
 const jwt=require("jsonwebtoken")
 const userAuth=async(req,res,next)=>{
-   try {cookies= req.cookies;
+   try {
+    cookies = req.cookies;
    const {token}=cookies;
   if(!token){
     throw new Error("Token Invalid!!!!!!!!")

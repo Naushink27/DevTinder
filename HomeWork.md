@@ -76,5 +76,9 @@
 
 - We have created a userAuth and write inside profile and sendConnectionRequest API.
 - ExpiresIn for the expiry of jwt .
+- Mongoose method for JWT and password.
+
+- Listed all the API we require for our application.
+
 
 
