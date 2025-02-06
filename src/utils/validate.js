@@ -1,3 +1,4 @@
+const cookieParser = require('cookie-parser');
 const validator=require('validator');
 const validateSignup=(req)=>{
     const data= req.body;
@@ -18,5 +19,18 @@ const validateSignup=(req)=>{
         throw new Error("Password is weak")
     }
 }
+const validateEditProfileData =(req)=>{
+  
+   const data=req.body;
+    const isAllowed=["age","skills","about","gender","imageURL"]
+    const fieldAllowed= Object.keys(data).every((k)=>isAllowed.includes(k));
+    if(!fieldAllowed){
+throw new Error("Cannot update this field")
+    }
+   return fieldAllowed;
+    
 
-module.exports=validateSignup
+}
+
+
+module.exports={validateSignup,validateEditProfileData}
