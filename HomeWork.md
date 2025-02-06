@@ -79,6 +79,13 @@
 - Mongoose method for JWT and password.
 
 - Listed all the API we require for our application.
+- Grouped api as authRouter, profileRouter, connectionRequestRouter.
+- Created different modules for each group.
+- used express.Router to create each router.
+- and just pasted the API.
+- Created logout API .
+- Created profile edit API.
+- created Update password API.
 
 
 
