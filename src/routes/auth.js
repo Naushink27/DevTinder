@@ -14,7 +14,7 @@ authRouter.post('/signup',async(req,res)=>{
      const {firstName,lastName,email}= req.body;
      const password=req.body.password;
      const hashedPassword= await bcrypt.hash(password,10);
-     console.log(hashedPassword);
+    
       
     //Creating new instance of the User model.
   
@@ -64,4 +64,5 @@ authRouter.post("/login",async(req,res)=>{
     
   
   })
+
 module.exports=authRouter

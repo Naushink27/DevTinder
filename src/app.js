@@ -3,9 +3,9 @@ const connectDB=require("./config/database")
 const app=express();
 const cookie=require("cookie-parser");
 
-const { authRouter } = require('./routes/auth');
-const { profileRouter } = require('./routes/profile');
-const { requestRouter } = require('./routes/request');
+const authRouter  = require('./routes/auth');
+const  profileRouter = require('./routes/profile');
+const  requestRouter  = require('./routes/request');
 
 app.use(express.json());
 app.use(cookie())

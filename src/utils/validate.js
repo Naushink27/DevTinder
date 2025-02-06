@@ -19,4 +19,4 @@ const validateSignup=(req)=>{
     }
 }
 
-module.exports={validateSignup}
+module.exports=validateSignup
