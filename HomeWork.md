@@ -88,4 +88,12 @@
 - created Update password API.
 
 
+- Created connectionReques API.
+- /request/send/:status/:toUserId.
+- Added validations .
+- model.pre() function runs everytime a instance of a model is created.
+- created indexes using model.index.
+
+
+
 
