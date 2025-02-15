@@ -98,8 +98,10 @@
 - Created Request Review API.(request/review/status/requestId )
 - Created review received requests that are pending.(user/connections/received)
 - used ref and populate to connect to DB's.
-- Created revies connection API.(user/connections)
-
+- Created review connection API.(user/connections)
+- Created feed API.
+- Explore the querey operator.
+- Pagination 
 
 
 
