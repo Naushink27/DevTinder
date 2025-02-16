@@ -13,7 +13,7 @@ userRouter.get("/user/connections/received",userAuth,async(req,res)=>{
             toUserId:loggedInUser._id,
             status:"interested"
         }).populate(
-            "fromUserId",USER_DATABASE
+            "fromUserId",USER_SAFE_DATA
         )
            console.log(connectionRequest)
         res.json({

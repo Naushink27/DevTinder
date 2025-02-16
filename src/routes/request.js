@@ -20,7 +20,7 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
             throw new Error("No user found with the given ID.");
         }
 
-        if (toUserId === fromUserId.toString()) {
+        if (toUserId.toString() === fromUserId.toString()) {
             throw new Error("You cannot send a request to yourself.");
         }
 
