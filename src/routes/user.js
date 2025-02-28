@@ -4,10 +4,9 @@ const ConnectionRequest = require('../models/connectionRequest');
 const { populate } = require('../models/user');
 const User = require('../models/user');
 const userRouter=express.Router();
-const USER_SAFE_DATA="firstName lastName skills about gender age";
+const USER_SAFE_DATA="firstName lastName skills about gender age imageUrl";
 userRouter.get("/user/connections/received",userAuth,async(req,res)=>{
     try{
-
         const loggedInUser=req.user;
         const connectionRequest=await ConnectionRequest.find({
             toUserId:loggedInUser._id,
@@ -64,7 +63,7 @@ userRouter.get("/user/connections",userAuth,async(req,res)=>{
 
 })
 
-userRouter.get("/user/feed",userAuth,async(req,res)=>{
+userRouter.get("/feed",userAuth,async(req,res)=>{
     try{
         const loggedInUser=req.user;
         const page=parseInt(req.query.page) || 1;

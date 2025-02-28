@@ -22,7 +22,7 @@ const validateSignup=(req)=>{
 const validateEditProfileData =(req)=>{
   
    const data=req.body;
-    const isAllowed=["age","skills","about","gender","imageURL"]
+    const isAllowed=["age","skills","about","gender","imageUrl","firstName","lastName"];
     const fieldAllowed= Object.keys(data).every((k)=>isAllowed.includes(k));
     if(!fieldAllowed){
 throw new Error("Cannot update this field")
