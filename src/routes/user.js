@@ -15,7 +15,10 @@ userRouter.get("/user/connections/received",userAuth,async(req,res)=>{
             "fromUserId",USER_SAFE_DATA
         )
            console.log(connectionRequest)
-        res.send(connectionRequest)
+           res.json({
+            message:`Following are the connection of ${loggedInUser.firstName}`,
+            data:connectionRequest
+        })
 
     }catch(err){
         res.status(500).json({
