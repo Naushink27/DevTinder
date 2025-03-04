@@ -19,6 +19,9 @@ app.use("/",authRouter)
 app.use("/",profileRouter)
 app.use("/",requestRouter)
 app.use("/",userRouter)
+app.get("/",(req,res)=>{
+  res.send("APi is running ")
+})
 connectDB().then(()=>{
   console.log("Database connected")
   app.listen(7777,()=>{
