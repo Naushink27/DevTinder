@@ -9,7 +9,7 @@ const  profileRouter = require('./src/routes/profile');
 const  requestRouter  = require('./src/routes/request');
 const userRouter= require('./src/routes/user')
 app.use(cors({
-  origin:"http://localhost:5173",
+  origin:"https://famous-faloodeh-1b63c6.netlify.app",
   credentials:true
 }))
 app.use(express.json());
