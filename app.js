@@ -10,7 +10,9 @@ const  requestRouter  = require('./src/routes/request');
 const userRouter= require('./src/routes/user')
 app.use(cors({
   origin:"https://famous-faloodeh-1b63c6.netlify.app",
-  credentials:true
+  credentials:true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Allow PATCH
+    allowedHeaders: ["Content-Type", "Authorization"],
 }))
 app.use(express.json());
 app.use(cookie())
