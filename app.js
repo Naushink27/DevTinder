@@ -1,13 +1,13 @@
 const express=require('express');
 const cors=require('cors');
-const connectDB=require("./config/database")
+const connectDB=require("./src/config/database")
 const app=express();
 const cookie=require("cookie-parser");
 
-const authRouter  = require('./routes/auth');
-const  profileRouter = require('./routes/profile');
-const  requestRouter  = require('./routes/request');
-const userRouter= require('./routes/user')
+const authRouter  = require('./src/routes/auth');
+const  profileRouter = require('./src/routes/profile');
+const  requestRouter  = require('./src/routes/request');
+const userRouter= require('./src/routes/user')
 app.use(cors({
   origin:"http://localhost:5173",
   credentials:true
