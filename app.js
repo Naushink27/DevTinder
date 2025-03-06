@@ -9,7 +9,7 @@ const  profileRouter = require('./src/routes/profile');
 const  requestRouter  = require('./src/routes/request');
 const userRouter= require('./src/routes/user')
 app.use(cors({
-  origin:"https://sweet-souffle-755dc7.netlify.app",
+  origin:"https://devtinder-web-project.vercel.app",
   credentials:true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Allow PATCH
     allowedHeaders: ["Content-Type", "Authorization"],
