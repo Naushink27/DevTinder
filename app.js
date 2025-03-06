@@ -2,7 +2,7 @@ const express=require('express');
 const cors=require('cors');
 const connectDB=require("./src/config/database")
 const app=express();
-const cookie=require("cookie-parser");
+const cookieParser=require("cookie-parser");
 
 const authRouter  = require('./src/routes/auth');
 const  profileRouter = require('./src/routes/profile');
@@ -17,6 +17,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"], // ✅ Allow Authorization header
 }));
 app.use(express.json());
+app.use(cookieParser())
 
 app.use("/",authRouter)
 app.use("/",profileRouter)
