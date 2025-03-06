@@ -16,7 +16,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"], // ✅ Allow Authorization header
 }));
-
+app.use(express.json());
 
 app.use("/",authRouter)
 app.use("/",profileRouter)
