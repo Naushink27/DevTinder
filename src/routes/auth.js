@@ -50,7 +50,11 @@ authRouter.post("/login",async(req,res)=>{
     const isPassword=await  user.validatePassword(password);
       if(isPassword){
         const token= await user.getJWT();
-        res.cookie("token",token);
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: true, // ✅ Required for HTTPS
+          sameSite: "None", // ✅ Required for cross-origin requests
+        });
         res.send(user)
       }
       else{

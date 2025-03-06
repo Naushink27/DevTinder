@@ -8,14 +8,15 @@ const authRouter  = require('./src/routes/auth');
 const  profileRouter = require('./src/routes/profile');
 const  requestRouter  = require('./src/routes/request');
 const userRouter= require('./src/routes/user')
+
+
 app.use(cors({
-  origin:"https://devtinder-web-project.vercel.app",
-  credentials:true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Allow PATCH
-    allowedHeaders: ["Content-Type", "Authorization"],
-}))
-app.use(express.json());
-app.use(cookie())
+  origin: "https://devtinder-web-project.vercel.app", // ✅ Allow frontend domain
+  credentials: true, // ✅ Required to allow cookies in browser
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"], // ✅ Allow Authorization header
+}));
+
 
 app.use("/",authRouter)
 app.use("/",profileRouter)
