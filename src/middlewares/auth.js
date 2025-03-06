@@ -2,7 +2,8 @@ const User=require("../models/user")
 const jwt=require("jsonwebtoken")
 const userAuth=async(req,res,next)=>{
    try {
-    let token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    cookies = req.cookies;
+   const {token}=cookies;
   if(!token){
     throw new Error("Please login first")
   }
