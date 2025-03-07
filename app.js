@@ -1,3 +1,6 @@
+require('dotenv').config();
+console.log("Loaded API Key:", process.env.BREVO_API_KEY);
+
 const express=require('express');
 const cors=require('cors');
 const connectDB=require("./src/config/database")
@@ -8,6 +11,8 @@ const authRouter  = require('./src/routes/auth');
 const  profileRouter = require('./src/routes/profile');
 const  requestRouter  = require('./src/routes/request');
 const userRouter= require('./src/routes/user')
+
+
 
 
 app.use(cors({
