@@ -43,7 +43,7 @@ authRouter.post("/login",async(req,res)=>{
         throw new Error("Email and password are required")
       }
       const user= await User.findOne({email:email});
-     console.log(user)
+    
       if(!user){
         throw new Error("invalid Credentials!!");
       }
@@ -52,8 +52,8 @@ authRouter.post("/login",async(req,res)=>{
         const token= await user.getJWT();
         res.cookie("token", token, {
           httpOnly: true,
-          secure: true, // ✅ Required for HTTPS
-          sameSite: "None", // ✅ Required for cross-origin requests
+  secure: process.env.NODE_ENV === "production", // ✅ Secure only in production
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // ✅ Fix for localhost
         });
         res.send(user)
       }

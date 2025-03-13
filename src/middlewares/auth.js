@@ -5,17 +5,22 @@ const userAuth = async (req, res, next) => {
   try {
     // ✅ Ensure req.cookies is defined before accessing `token`
     const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
+   
 
     if (!token) {
       return res.status(401).json({ error: "Please login first" }); // ✅ Send 401 Unauthorized
     }
 
     // ✅ Verify Token
-    const decodedData = jwt.verify(token, "Dev@Tinder$123");
+    console.log("verifying JWT token")
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log(decodedData)
+   
     const { id } = decodedData;
 
     // ✅ Find User in Database
     const user = await User.findById(id);
+   
     if (!user) {
       return res.status(401).json({ error: "Invalid User!!!!" });
     }
@@ -23,7 +28,9 @@ const userAuth = async (req, res, next) => {
     req.user = user;
     next(); // ✅ Pass control to the next middleware
 
-  } catch (err) {
+
+  } 
+  catch (err) {
     return res.status(401).json({ error: "Invalid or Expired Token" });
   }
 };
