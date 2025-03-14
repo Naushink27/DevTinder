@@ -21,7 +21,7 @@ const paymentRouter = require('./src/routes/payment');
 
 const allowedOrigins = [  
   "http://localhost:5173", // Local frontend  
-  "https://sweet-souffle-755dc7.netlify.app/" // Replace with your deployed frontend URL
+  "https://sweet-souffle-755dc7.netlify.app" // Replace with your deployed frontend URL
 ];
 
 app.use(cors({
