@@ -1,4 +1,8 @@
 require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config(); // Load .env only in development
+}
+
 
 
 const express=require('express');
@@ -26,8 +30,9 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
-app.use(express.json());
-app.use(cookieParser())
+
+app.use(express.json());  // ✅ Then parse JSON  
+app.use(cookieParser());
 
 app.use("/",authRouter)
 app.use("/",profileRouter)
