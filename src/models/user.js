@@ -52,6 +52,13 @@ const userSchema = new mongoose.Schema({
         type: Number,
         min: [18, "Age should be greater than 18"],
     },
+    isPremium: {
+        type: Boolean,
+        default: false,
+      },
+      membershipType: {
+        type: String,
+      },
     imageUrl: {
         type: String,
         default: "https://www.healthatlastusa.com/wp-content/uploads/2023/09/35-350426_profile-icon-png-default-profile-picture-png-transparent.jpg",
