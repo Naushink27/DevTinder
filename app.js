@@ -33,6 +33,14 @@ app.use(cors({
 
 app.use(express.json());  // ✅ Then parse JSON  
 app.use(cookieParser());
+process.on("uncaughtException", (err) => {
+  console.error("❌ Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("❌ Unhandled Rejection:", err);
+});
+
 
 app.use("/",authRouter)
 app.use("/",profileRouter)
