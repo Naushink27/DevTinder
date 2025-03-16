@@ -23,9 +23,10 @@ const allowedOrigins = [
   "http://localhost:5173", // Local frontend  
   "https://zippy-bubblegum-058e76.netlify.app" // Replace with your deployed frontend URL
 ];
+app.options("*", cors()); // ✅ Handles preflight for all routes
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: allowedOrigins, 
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
