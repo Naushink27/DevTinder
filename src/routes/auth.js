@@ -52,8 +52,8 @@ authRouter.post("/login",async(req,res)=>{
         const token= await user.getJWT();
         res.cookie("token", token, {
           httpOnly: true,
-  secure: process.env.NODE_ENV === "production", // ✅ Secure only in production
-  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // ✅ Fix for localhost
+  secure: true,
+  sameSite: "None"
         });
         res.send(user)
       }
@@ -68,9 +68,15 @@ authRouter.post("/login",async(req,res)=>{
     
   
   })
-authRouter.post("/logout",async(req,res)=>{
-  res.cookie("token",null,{expires: new Date (Date.now())})
-  res.send("logout succesfully")
-})
+  authRouter.post("/logout", async (req, res) => {
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      expires: new Date(0), // ✅ Immediately expire the cookie
+    });
+    res.status(200).json({ message: "Logout successful" });
+  });
+  
 
 module.exports=authRouter
