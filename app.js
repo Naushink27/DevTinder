@@ -19,18 +19,25 @@ const paymentRouter = require('./src/routes/payment');
 
 
 
+
 const allowedOrigins = [  
-  "http://localhost:5173", // Local frontend  
-  "https://zippy-bubblegum-058e76.netlify.app" // Replace with your deployed frontend URL
+  "http://localhost:5173",  
+  "https://zippy-bubblegum-058e76.netlify.app"
 ];
-app.options("*", cors()); // ✅ Handles preflight for all routes
 
 app.use(cors({
-  origin: allowedOrigins, 
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // ✅ Required for cookies/sessions
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 
 app.use(express.json());  // ✅ Then parse JSON  
 app.use(cookieParser());
