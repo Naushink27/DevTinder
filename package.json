@@ -24,6 +24,7 @@
     "nodemailer": "^6.10.0",
     "razorpay": "^2.9.6",
     "resend": "^4.1.2",
+    "socket.io": "^4.8.1",
     "validator": "^13.12.0"
   }
 }
