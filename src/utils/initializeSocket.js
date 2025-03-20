@@ -1,5 +1,6 @@
 const socket=require('socket.io')
 const crypto = require("crypto");
+const Chat=require('../models/chat')
 const getSecretRoomId = (userId, targetUserId) => {
     return crypto
       .createHash("sha256")
@@ -30,10 +31,33 @@ const initializeSocket=(server)=>{
           console.log(firstName + " joined Room : " + roomId);
           socket.join(roomId);
         });
-      socket.on("sendMessage",({firstName, userId,targetUserId, text})=>{
-        const roomId=getSecretRoomId(userId,targetUserId)
-        console.log(firstName+""+text)
-        io.to(roomId).emit("messageRecieved",{firstName,text})
+      socket.on("sendMessage",async({firstName, userId,targetUserId, text})=>{
+        try{
+          const roomId=getSecretRoomId(userId,targetUserId)
+          console.log(firstName+": "+text)
+           let chat= await Chat.findOne({participants:[userId,targetUserId]})
+        if(!chat){
+          chat = new Chat({
+            participants:[userId,targetUserId],
+            message:[]
+          })
+        }
+        chat.message.push({
+          senderId:userId,
+          text:text
+        })
+
+         chat.save()
+
+
+          io.to(roomId).emit("messageRecieved",{firstName,text})
+
+
+
+        }catch(err){
+          console.error(err)
+        }
+   
       })
 
     })
