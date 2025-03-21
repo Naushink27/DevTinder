@@ -47,7 +47,7 @@ const initializeSocket=(server)=>{
           text:text
         })
 
-         chat.save()
+         await chat.save()
 
 
           io.to(roomId).emit("messageRecieved",{firstName,text})

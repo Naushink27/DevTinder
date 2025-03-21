@@ -16,6 +16,7 @@ const authRouter  = require('./src/routes/auth');
 const  profileRouter = require('./src/routes/profile');
 const  requestRouter  = require('./src/routes/request');
 const userRouter= require('./src/routes/user');
+const chatRouter= require('./src/routes/chat');
 const paymentRouter = require('./src/routes/payment');
 
 
@@ -56,6 +57,7 @@ app.use("/",profileRouter)
 app.use("/",requestRouter)
 app.use("/",userRouter)
 app.use("/",paymentRouter)
+app.use("/",chatRouter)
 app.get("/",(req,res)=>{
   res.send("APi is running ")
 })
