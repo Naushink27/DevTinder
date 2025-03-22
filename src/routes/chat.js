@@ -1,11 +1,11 @@
 const express= require('express');
-const Chat = require('../models/chat');
+const {Chat} = require('../models/chat');
 const chatRouter=express.Router();
 const {userAuth}=require('../middlewares/auth');
 chatRouter.get("/chat/:targetUserId",userAuth,async(req,res)=>{
 
     try{
-            const targetUserId=req.params.targetUserId;
+            const {targetUserId}=req.params;
             const userId=req.user._id;
 
             let chat= await Chat.findOne({
