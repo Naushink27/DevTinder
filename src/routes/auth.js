@@ -3,8 +3,10 @@ const authRouter=express.Router();
 const User= require("../models/user")
 const bcrypt= require('bcrypt');
 const {validateSignup}=require('../utils/validate')
-
-
+const jwt=require('jsonwebtoken')
+const updateUserStatus= async(userId,status)=>{
+  await User.findByIdAndUpdate(userId,{isOnline:status})
+}
 authRouter.post('/signup',async(req,res)=>{
     try{
      //Validate the data before creating a user.
@@ -55,6 +57,8 @@ authRouter.post("/login",async(req,res)=>{
   secure: true,
   sameSite: "None"
         });
+
+        await updateUserStatus(user._id,true);
         res.send(user)
       }
       else{
@@ -69,14 +73,36 @@ authRouter.post("/login",async(req,res)=>{
   
   })
   authRouter.post("/logout", async (req, res) => {
-    res.cookie("token", "", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-      expires: new Date(0), // ✅ Immediately expire the cookie
-    });
-    res.status(200).json({ message: "Logout successful" });
+    try {
+      // Extract token from cookie
+      const token = req.cookies.token;
+      if (!token) {
+        return res.status(401).json({ error: "User not authenticated" });
+      }
+  
+      // Find the user from the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      const userId = decoded.id; // Extract user ID from token
+  
+      // Clear the cookie
+      res.cookie("token", "", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        expires: new Date(0), // ✅ Expire the cookie immediately
+      });
+  
+      // ✅ Update the user's status to offline
+      await updateUserStatus(userId, false);
+      
+  
+      res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+      console.error("Logout error:", error);
+      res.status(500).json({ error: "Server error during logout" });
+    }
   });
+  
   
 
 module.exports=authRouter

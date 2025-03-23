@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    isOnline:{
+        type:Boolean,
+        default:false
+    },
     age: {
         type: Number,
         min: [18, "Age should be greater than 18"],
