@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    lastLogin:{
+        type:Date,
+        default:null
+    },
     age: {
         type: Number,
         min: [18, "Age should be greater than 18"],

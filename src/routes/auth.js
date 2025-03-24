@@ -94,6 +94,13 @@ authRouter.post("/login",async(req,res)=>{
   
       // ✅ Update the user's status to offline
       await updateUserStatus(userId, false);
+     const data= await User.findByIdAndUpdate(userId,{
+
+    
+        lastLogin:Date.now()
+      })
+      console.log("User:"+data)
+
       
   
       res.status(200).json({ message: "Logout successful" });

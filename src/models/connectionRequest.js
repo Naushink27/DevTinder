@@ -15,6 +15,10 @@ const connectionRequestSchema= new mongoose.Schema({
   status:{
     type:String,
     enum:["ignored","interested","accepted","rejected"]
+  },
+  isBlocked:{
+    type:Boolean,
+    default:false
   }
 },{
     timestamps: true,
