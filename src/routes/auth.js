@@ -4,9 +4,14 @@ const User= require("../models/user")
 const bcrypt= require('bcrypt');
 const {validateSignup}=require('../utils/validate')
 const jwt=require('jsonwebtoken')
-const updateUserStatus= async(userId,status)=>{
-  await User.findByIdAndUpdate(userId,{isOnline:status})
-}
+const userAuth=require('../middlewares/auth')
+const updateUserStatus = async (userId, status) => {
+  try {
+    await User.findByIdAndUpdate(userId, { isOnline: status });
+  } catch (error) {
+    console.error("Failed to update user status:", error);
+  }
+};
 authRouter.post('/signup',async(req,res)=>{
     try{
      //Validate the data before creating a user.
@@ -74,38 +79,26 @@ authRouter.post("/login",async(req,res)=>{
   })
   authRouter.post("/logout", async (req, res) => {
     try {
-      // Extract token from cookie
-      const token = req.cookies.token;
-      if (!token) {
-        return res.status(401).json({ error: "User not authenticated" });
-      }
-  
-      // Find the user from the token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      const userId = decoded.id; // Extract user ID from token
+      
+  const token= req.cookies.token;
+  const decodedData=jwt.verify(token,process.env.JWT_SECRET_KEY);
+  const userId=decodedData.id;
   
       // Clear the cookie
-      res.cookie("token", "", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        expires: new Date(0), // ✅ Expire the cookie immediately
+      res.cookie("token", null, {
+        expires: new Date(Date.now()),
       });
   
       // ✅ Update the user's status to offline
-      await updateUserStatus(userId, false);
-     const data= await User.findByIdAndUpdate(userId,{
-
     
-        lastLogin:Date.now()
-      })
-      console.log("User:"+data)
+await updateUserStatus(userId, false);
 
+await User.findByIdAndUpdate(userId, { lastLogin: new Date() });  
       
   
       res.status(200).json({ message: "Logout successful" });
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("Logout error:", error.message);
       res.status(500).json({ error: "Server error during logout" });
     }
   });

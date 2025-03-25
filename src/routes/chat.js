@@ -29,9 +29,6 @@ chatRouter.get("/chat/:targetUserId",userAuth,async(req,res)=>{
                 ]
             });
     
-            if (connection?.isBlocked) {
-                return res.status(403).json({ message: "You cannot chat with this user as they are blocked." });
-            }
 
             if(!chat){
                 chat=new Chat({
@@ -48,32 +45,6 @@ chatRouter.get("/chat/:targetUserId",userAuth,async(req,res)=>{
     }
 })
 
-chatRouter.post("/block/:targetUserId", userAuth, async (req, res) => {
-    try {
-        const targetUser = req.params.targetUserId;
-        const userId = req.user._id;
 
-        const connection = await ConnectionRequest.findOne({
-            $or: [
-                { fromUserId: userId, toUserId: targetUser },
-                { fromUserId: targetUser, toUserId: userId }
-            ]
-        });
-
-        if (!connection) {
-            return res.status(404).json({ message: "No connection found." });
-        }
-
-        // ✅ Toggle Block/Unblock
-        connection.isBlocked = !connection.isBlocked;
-       
-        await connection.save();
-
-        return res.status(200).json({ message: connection.isBlocked ? "User blocked" : "User unblocked", isBlocked: connection.isBlocked });
-    } catch (err) {
-        console.error("Error blocking user:", err);
-        return res.status(500).json({ message: "Something went wrong" });
-    }
-});
 
 module.exports=chatRouter;

@@ -70,5 +70,26 @@ profileRouter.patch("/profile/edit/password", userAuth, async (req, res) => {
     res.status(500).json({ message: "Something went wrong", error: err.message });
   }
 });
+profileRouter.get("/profile/view/:targetUserId", userAuth, async (req, res) => {
+  try {
+    const { targetUserId } = req.params;
+    console.log("userId:", targetUserId); // ✅ Debugging log
+
+   
+
+    const user = await User.findById(targetUserId)
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("User found:", user); // ✅ Debugging log
+    res.status(200).json(user);
+  } catch (err) {
+    console.error("Error fetching user profile:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 module.exports = profileRouter;
