@@ -9,8 +9,8 @@ const validateSignup=(req)=>{
        }
     const {firstName , lastName ,email, password}=req.body;
 
-    if(!firstName || !lastName){
-        throw new Error("First name and last name are required")
+    if(!firstName || !lastName || !email || !password){
+        throw new Error("All fields are required")
     }
     else if(!validator.isEmail(email)){
         throw new Error ("invalid Error")
