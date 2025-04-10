@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 
 app.use(cors({
-  origin: "https://devtinder-web-if8h.vercel.app",
+  origin: "https://devtinder-web-project.vercel.app",
   credentials: true, // ✅ Required for cookies/sessions
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
