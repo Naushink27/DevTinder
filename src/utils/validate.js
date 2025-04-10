@@ -18,6 +18,9 @@ const validateSignup=(req)=>{
     else if(!validator.isStrongPassword(password)){
         throw new Error("Password is weak")
     }
+    else{
+        console.log("Signup data is valid")
+    }
 }
 const validateEditProfileData =(req)=>{
   

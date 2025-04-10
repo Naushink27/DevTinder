@@ -22,10 +22,9 @@ const paymentRouter = require('./src/routes/payment');
 
 
 
-const allowedOrigins = [  
-  "http://localhost:5173",  
-  "https://zippy-bubblegum-058e76.netlify.app"
-];
+app.use(express.json());  // ✅ Then parse JSON  
+app.use(cookieParser());
+
 
 app.use(cors({
   origin: "https://devtinder-web-if8h.vercel.app",
@@ -35,8 +34,6 @@ app.use(cors({
 }));
 
 
-app.use(express.json());  // ✅ Then parse JSON  
-app.use(cookieParser());
 process.on("uncaughtException", (err) => {
   console.error("❌ Uncaught Exception:", err);
 });
